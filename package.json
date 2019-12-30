@@ -4,7 +4,9 @@
   "description": "This is API for hamrobazar app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm run lint && nodemon index.js",
+    "lint": "node_modules/.bin/eslint app.js",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",

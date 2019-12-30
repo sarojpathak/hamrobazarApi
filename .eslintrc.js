@@ -15,11 +15,11 @@ module.exports = {
     ecmaVersion: 2018,
   },
   rules: {
-  // "semi":["error","always"]
-  // "semi":["warn","always"]
-  "semi":["off","always"],
-  "quotes":["warn","double"],
-  "no-console":"warn"
+    // "semi":["error","always"]
+    // "semi":["warn","always"]
+    "semi":["off","always"],
+    "quotes":["warn","double"],
+    "no-console":"warn"
   },
 };
 
