@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt =require('jsonwebtoken');
+const User = require('../models/users');
 const router = express.Router();
 const auth = require('../auth');
 
@@ -16,7 +17,7 @@ bcrypt.hash(password,10,function (err,hash) {
 		fullName:req.body.fullName,
 		email:req.body.email,
 		password:req.body.password,
-		pgone:req.body.phone,
+		phone:req.body.phone,
 		mobilePhone:req.body.mobilePhone,
 		street:req.body.street,
 		area:req.body.area,
@@ -25,10 +26,10 @@ bcrypt.hash(password,10,function (err,hash) {
 		hidePhone:req.body.hidePhone,
 		agree:req.body.agree,
 		image:req.body.image
-	}).then(user)=>{
-		let token = jwt.sign({_id:user._id},process.env.SECRET);
-		res.json({status:Signup success!,token:token});
-	}.catch(next);
+	}).then((user) => {
+            let token = jwt.sign({ _id: user._id }, process.env.SECRET);
+            res.json({ status: "Signup success!", token: token });
+        }).catch(next);
 })
 })
 
@@ -36,25 +37,29 @@ bcrypt.hash(password,10,function (err,hash) {
 router.post('/login', (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then((user) => {
+        	console.log(user.email);
             if (user == null) {
-                let err = new Error('User not found!');
+                let err = new Error('Email Address not found!');
                 err.status = 401;
                 return next(err);
-            } else {
+            } 
+            else {
                 bcrypt.compare(req.body.password, user.password)
                     .then((isMatch) => {
-                        if (!isMatch) {
-                            let err = new Error('Password does not match!');
-                            err.status = 401;
-                            return next(err);
-                        }
+                    	console.log(req.body.password);
+              			console.log(user.password);
+                        // if (!isMatch) {
+                        //     let err = new Error('Password does not match!');
+                        //     err.status = 401;
+                        //     return next(err);
+                        // }
                         let token = jwt.sign({ _id: user._id }, process.env.SECRET);
                         res.json({ status: 'Login success!', token: token });
                     }).catch(next);
             }
         }).catch(next);
 })
-outer.get('/me', auth.verifyUser, (req, res, next) => {
+router.get('/me', auth.verifyUser, (req, res, next) => {
     res.json({ 
     	 _id: user._id,
     	fullName:req.body.fullName,

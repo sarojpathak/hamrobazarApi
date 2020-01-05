@@ -1,7 +1,7 @@
-const   mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-const  userSchema = new mongoose.Schema({
-    fullName:{
+const userSchema = new mongoose.Schema({
+   fullName:{
         type:String,
         require:true
     },
@@ -27,23 +27,23 @@ const  userSchema = new mongoose.Schema({
     street:{
         type:String,
         require:true
-    }
+    },
     area:{
         type:String,
         require:true
-    }
+    },
     city:{
         type:String,
         require:true
-    }
+    },
     newsletter:{
         type:Boolean,
         default:false
-    }
+    },
     hidePhone:{
         type:Boolean,
         default:false
-    }
+    },
     agree:{
         type:Boolean,
         default:false
@@ -53,4 +53,6 @@ const  userSchema = new mongoose.Schema({
         default:false
     }
 
-});
+},{ timestamps: true });
+
+module.exports = mongoose.model('User', userSchema);

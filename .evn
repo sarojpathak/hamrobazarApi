@@ -1,3 +1,0 @@
-	port=3003
-	URL='mongodb://localhost:27017/hamrobazar'
-	SECRET='HamroBazarSecretKey'
