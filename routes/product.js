@@ -1,22 +1,22 @@
 const express = require('express');
-const Category = require('../models/category');
+const Product = require('../models/product');
 const auth = require('../auth');
 
 const router = express.Router();
 
 router.route('/')
     .get((req, res, next) => {
-        Category.find({})
-            .then((categories) => {
-                res.json(categories);
+        Product.find({})
+            .then((products) => {
+                res.json(products);
             })
             .catch(next);
     })
     .post((req, res, next) => {
-        Category.create(req.body)
-            .then((category) => {
+        Product.create(req.body)
+            .then((Product) => {
                 res.statusCode = 201;
-                res.json(category);
+                res.json(Product);
             })
             .catch(next);
     })
@@ -25,7 +25,7 @@ router.route('/')
         res.json({ message: "Method not allowed" });
     })
     .delete(auth.verifyAdmin, (req, res, next) => {
-        Category.deleteMany({})
+        Product.deleteMany({})
             .then((reply) => {
                 res.json(reply);
             })
@@ -34,13 +34,13 @@ router.route('/')
 
 router.route('/:id')
     .get((req, res, next) => {
-        Category.findById(req.params.id)
+        Product.findById(req.params.id)
             .populate({
                 path: 'tasks',
                 select: 'name'
             })
-            .then((category) => {
-                res.json(category);
+            .then((Product) => {
+                res.json(Product);
             }).catch(next);
     })
     .post()

@@ -3,38 +3,36 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
    fullName:{
         type:String,
-        require:true
+        required:true
     },
-    email:{
+    username:{
         type:String,
-        require:true,
+        required:true,
         unique:true  
     },
     password:{
         type:String,
-        require:true,
-        minlength:6,
-        maxlength:20
-    },
+        required:true,
+            },
     phone:{
         type:Number,
-        require:false
+        required:false
     },
     mobilePhone:{
         type:Number,
-        require:false   
+        required:false   
     },
     street:{
         type:String,
-        require:true
+        required:true
     },
     area:{
         type:String,
-        require:true
+        required:true
     },
     city:{
         type:String,
-        require:true
+        required:true
     },
     newsletter:{
         type:Boolean,
@@ -47,6 +45,10 @@ const userSchema = new mongoose.Schema({
     agree:{
         type:Boolean,
         default:false
+    },
+    image:{
+        type:String,
+        required:true
     },
     admin:{
         type:Boolean,

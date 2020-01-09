@@ -15,8 +15,8 @@ bcrypt.hash(password,10,function (err,hash) {
 	}
 	User.create({
 		fullName:req.body.fullName,
-		email:req.body.email,
-		password:req.body.password,
+		username:req.body.username,
+		password:hash,
 		phone:req.body.phone,
 		mobilePhone:req.body.mobilePhone,
 		street:req.body.street,
@@ -35,11 +35,11 @@ bcrypt.hash(password,10,function (err,hash) {
 
 
 router.post('/login', (req, res, next) => {
-    User.findOne({ email: req.body.email })
+    User.findOne({ username: req.body.username })
         .then((user) => {
-        	console.log(user.email);
+        	console.log(user.username);
             if (user == null) {
-                let err = new Error('Email Address not found!');
+                let err = new Error('username Address not found!');
                 err.status = 401;
                 return next(err);
             } 
@@ -48,11 +48,11 @@ router.post('/login', (req, res, next) => {
                     .then((isMatch) => {
                     	console.log(req.body.password);
               			console.log(user.password);
-                        // if (!isMatch) {
-                        //     let err = new Error('Password does not match!');
-                        //     err.status = 401;
-                        //     return next(err);
-                        // }
+                        if (!isMatch) {
+                            let err = new Error('Password does not match!');
+                            err.status = 401;
+                            return next(err);
+                        }
                         let token = jwt.sign({ _id: user._id }, process.env.SECRET);
                         res.json({ status: 'Login success!', token: token });
                     }).catch(next);

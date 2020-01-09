@@ -1,8 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require('morgan');
-const taskRouter = require('./routes/tasks');
-const categoryRouter = require('./routes/category');
+const productRouter = require('./routes/product');
 const userRouter = require('./routes/users');
 const dotenv = require('dotenv').config();
 const uploadRouter = require('./routes/upload');
@@ -26,8 +25,7 @@ mongoose.connect(process.env.URL, { useNewUrlParser: true, useUnifiedTopology: t
 app.use('/users', userRouter);
 app.use('/upload', uploadRouter);
 app.use(auth.verifyUser);
-app.use('/categories', categoryRouter);
-app.use('/tasks', taskRouter);
+app.use('/products', productRouter);
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
