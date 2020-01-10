@@ -24,8 +24,8 @@ mongoose.connect(process.env.URL, { useNewUrlParser: true, useUnifiedTopology: t
 
 app.use('/users', userRouter);
 app.use('/upload', uploadRouter);
-app.use(auth.verifyUser);
 app.use('/products', productRouter);
+app.use(auth.verifyUser);
 
 app.use((err, req, res, next) => {
     console.error(err.stack);

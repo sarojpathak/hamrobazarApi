@@ -37,9 +37,8 @@ bcrypt.hash(password,10,function (err,hash) {
 router.post('/login', (req, res, next) => {
     User.findOne({ username: req.body.username })
         .then((user) => {
-        	console.log(user.username);
             if (user == null) {
-                let err = new Error('username Address not found!');
+                let err = new Error('Email Address not found!');
                 err.status = 401;
                 return next(err);
             } 
@@ -61,41 +60,11 @@ router.post('/login', (req, res, next) => {
 })
 router.get('/me', auth.verifyUser, (req, res, next) => {
     res.json({ 
-    	 _id: user._id,
-    	fullName:req.body.fullName,
-		email:req.body.email,
-		password:req.body.password,
-		pgone:req.body.phone,
-		mobilePhone:req.body.mobilePhone,
-		street:req.body.street,
-		area:req.body.area,
-		city:req.body.city,
-		newsletter:req.body.newsletter,
-		hidePhone:req.body.hidePhone,
-		agree:req.body.agree,
-		image:req.body.image
+    	 _id: req._id,
+    	fullName:req.user.fullName,
+		username:req.user.username,
+		image:req.user.image
 	});
-});
-
-router.put('/me', auth.verifyUser, (req, res, next) => {
-    User.findByIdAndUpdate(req.user._id, { $set: req.body }, { new: true })
-        .then((user) => {
-            res.json({
-             _id: user._id,
-            fullName:req.body.fullName,
-			email:req.body.email,
-			password:req.body.password,
-			pgone:req.body.phone,
-			mobilePhone:req.body.mobilePhone,
-			street:req.body.street,
-			area:req.body.area,
-			city:req.body.city,
-			newsletter:req.body.newsletter,
-			hidePhone:req.body.hidePhone,
-			agree:req.body.agree,
-			image:req.body.image
-	});
-        }).catch(next);
 });
 
 module.exports = router;
